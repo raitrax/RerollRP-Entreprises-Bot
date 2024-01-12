@@ -1,0 +1,21 @@
+{
+  "name": "rerollbot",
+  "version": "1.0.0",
+  "description": "Discord bot for Reroll project",
+  "main": "index.js",
+  "repository": "https://github.com/RerollRP/rerollbot",
+  "author": "S0ngfu",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.5",
+    "node-cron": "^3.0.2",
+    "sequelize": "^6.33.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.51.0"
+  }
+}
