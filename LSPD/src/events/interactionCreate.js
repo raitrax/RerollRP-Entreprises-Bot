@@ -1,4 +1,4 @@
-const { Events, DiscordAPIError } = require('discord.js');
+const { Events, DiscordAPIError, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 
 module.exports = {
 	name: Events.InteractionCreate,
@@ -6,11 +6,38 @@ module.exports = {
 		if (interaction.isButton()) {
 			const [commandName, customId] = interaction.customId.split('|');
 			const command = interaction.client.commands.get(commandName);
-			if (!command) {
+			const member = interaction.member;
+			/*if (!command) {
 				console.error(`No command matching ${commandName} was found.`);
 				return;
+			}*/
+			if (command) {
+				// Exécuter la fonction associée à la commande
+				await command.buttonClicked(interaction, customId);
+			} else {
+				if (interaction.customId === "service") {
+					await interaction.deferReply({ ephemeral: true }).catch((e) => console.log(e));
+
+					if (member.roles.cache.has(process.env.SERVICE_ROLE_ID)) {
+						await member.roles.remove(process.env.SERVICE_ROLE_ID);
+						let FinServiceEmbed = new EmbedBuilder()
+							.setColor("#0099ff")
+							.setAuthor({ name: `Système Iris - ${new Date()}` })
+							.setDescription(`Fin de service :  **${member.nickname}**`)
+
+						await interaction.editReply({ embeds: [FinServiceEmbed], ephemeral: true });
+
+					} else {
+						await member.roles.add(process.env.SERVICE_ROLE_ID);
+						let DebServiceEmbed = new EmbedBuilder()
+							.setColor("#0099ff")
+							.setAuthor({ name: `Système Iris - ${new Date()}` })
+							.setDescription(`Prise de service : **${member.nickname}**`)
+
+						await interaction.editReply({ embeds: [DebServiceEmbed], ephemeral: true });
+					}
+				}
 			}
-			await command.buttonClicked(interaction, customId);
 		}
 
 		if (!interaction.isChatInputCommand() && !interaction.isAutocomplete()) return;
