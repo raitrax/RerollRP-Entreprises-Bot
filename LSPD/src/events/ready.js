@@ -38,9 +38,9 @@ const getServiceRequestEmbed = (channel) => {
 
 	return new EmbedBuilder()
 		.setColor(Colors.Green)
-		.setDescription(`Pour indiquer une prise / fin de service - Appuyer sur le bouton 🔴`)
+		.setDescription(`Pour indiquer une prise / fin de service - Appuyer sur le bouton 🔴\n Pour prendre la centrale - Appuyez sur 🟢`)
 		//.setDescription('Bon jeu!')
-		.setAuthor({ name: 'Reroll LSPD' })
+		.setAuthor({ name: 'Centrale LSPD' })
 		.setTimestamp(new Date());
 
 };
