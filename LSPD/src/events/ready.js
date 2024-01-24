@@ -23,10 +23,10 @@ module.exports = {
 		client.user.setActivity({ name: txtActivity, type: ActivityType.Custom });
 
 		const channel = client.channels.cache.get(process.env.PDS_CHANNEL_ID);
-		await channel.bulkDelete(99, true).catch(error => {
+		/*await channel.bulkDelete(99, true).catch(error => {
 			console.error(error);
 			channel.send({ content: 'Une erreur est survenue lors de la suppression des messages dans ce channel!', ephemeral: true });
-		});
+		});*/
 		await channel.send({ embeds: [getServiceRequestEmbed(channel)], components: [getServiceRequestButtons()] });
 
 		console.log(`Ready! Logged in as ${client.user.tag}`);
@@ -52,6 +52,10 @@ const getServiceRequestButtons = () => {
 				.setCustomId('service')
 				.setLabel('Service')
 				.setStyle(ButtonStyle.Danger),
+			new ButtonBuilder()
+				.setCustomId('lead')
+				.setLabel('Lead')
+				.setStyle(ButtonStyle.Success)
 		);
 };
 

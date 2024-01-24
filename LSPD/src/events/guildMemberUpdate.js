@@ -11,7 +11,7 @@ module.exports = {
 			if (process.env.LISTE_GRADE.includes(addedRoles.map(r => r.name))) {
 				console.log(`The roles ${addedRoles.map(r => r.name)} was choosen add`);
 				const effectifChannel = newMember.client.channels.cache.get(process.env.EFFECTIF_CHANNEL_ID);
-				await effectifLspd(effectifChannel, newMember.client, process.env.LISTE_GRADE);
+				//await effectifLspd(effectifChannel, newMember.client, process.env.LISTE_GRADE);
 			}
 			console.log(`The roles ${addedRoles.map(r => r.name)} were added from ${oldMember.displayName}.`);
 
@@ -23,7 +23,7 @@ module.exports = {
 			if (process.env.LISTE_GRADE.includes(removedRoles.map(r => r.name))) {
 				console.log(`The roles ${removedRoles.map(r => r.name)} was choosen remove`);
 				const effectifChannel = oldMember.client.channels.cache.get(process.env.EFFECTIF_CHANNEL_ID);
-				await effectifLspd(effectifChannel, oldMember.client, process.env.LISTE_GRADE);
+				//await effectifLspd(effectifChannel, oldMember.client, process.env.LISTE_GRADE);
 			}
 			console.log(`The roles ${removedRoles.map(r => r.name)} were removed to ${newMember.displayName}.`);
 

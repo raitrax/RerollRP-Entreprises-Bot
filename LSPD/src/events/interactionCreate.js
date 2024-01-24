@@ -24,9 +24,7 @@ module.exports = {
 							.setColor("#0099ff")
 							.setAuthor({ name: `Système Iris - ${new Date()}` })
 							.setDescription(`Fin de service :  **${member.nickname}**`)
-
 						await interaction.editReply({ embeds: [FinServiceEmbed], ephemeral: true });
-
 					} else {
 						await member.roles.add(process.env.SERVICE_ROLE_ID);
 						let DebServiceEmbed = new EmbedBuilder()
@@ -37,6 +35,30 @@ module.exports = {
 						await interaction.editReply({ embeds: [DebServiceEmbed], ephemeral: true });
 					}
 				}
+				if (interaction.customId === "lead") {
+					await interaction.deferReply({ ephemeral: true }).catch((e) => console.log(e));
+
+					if (member.roles.cache.has(process.env.SERVICE_LEAD_ROLE_ID)) {
+						interaction.guild.roles.fetch(process.env.SERVICE_LEAD_ROLE_ID)
+							.then(role => member.roles.remove(role))
+							.catch(console.error())
+						let DebServiceEmbed = new EmbedBuilder()
+							.setColor(colorWhite)
+							.setAuthor({ name: `Système Iris - ${new Date()}` })
+							.setDescription(`Vous n'êtes plus la centrale`)
+						await interaction.editReply({ embeds: [DebServiceEmbed], ephemeral: true });
+					} else {
+						interaction.guild.roles.fetch(process.env.SERVICE_LEAD_ROLE_ID)
+							.then(role => member.roles.add(role))
+							.catch(console.error())
+						let FinServiceEmbed = new EmbedBuilder()
+							.setColor(colorWhite)
+							.setAuthor({ name: `Système Iris - ${new Date()}` })
+							.setDescription(`Vous êtes la centrale`)
+						await interaction.editReply({ embeds: [FinServiceEmbed], ephemeral: true });
+					}
+				}
+
 			}
 		}
 
