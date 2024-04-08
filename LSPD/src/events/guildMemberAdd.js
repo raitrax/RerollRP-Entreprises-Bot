@@ -6,7 +6,7 @@ module.exports = {
 	async execute(member) {
 		console.warn(`New Member Joined --- id: ${member.id}\n--- name: ${member.displayName}`);
 		//check si bien embauché LSPD
-
+		// if a remplacer par le check metier joueur via api
 		if (member.roles.cache.has(process.env.LSPD_ROLE_ID)) {
 			try {
 				member = await member.roles.add(process.env.LSPD_ROLE_ID);
@@ -17,6 +17,7 @@ module.exports = {
 				return;
 			}
 		}
+		// if a remplacer par le check metier joueur via api
 		if (member.roles.cache.has(process.env.SAMS_ROLE_ID)) {
 			try {
 				member = await member.roles.add(process.env.SAMS_ROLE_ID);
