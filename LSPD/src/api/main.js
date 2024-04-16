@@ -5,8 +5,7 @@ const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
-const rolesRouter = require('./routes/roles');
-const statusRouter = require('./routes/status');
+const recruitRouter = require('./routes/recruit');
 
 app.use(cors({
 	origin: 'https://reroll-rp.fr/',
@@ -23,9 +22,7 @@ app.use(async (req, res, next) => {
 	next();
 });
 
-app.use('/role', rolesRouter);
-app.use('/status', statusRouter);
-
+app.use('/recruit', recruitRouter);
 
 app.get('*', (req, res) => {
 	res.sendStatus(404).end();
