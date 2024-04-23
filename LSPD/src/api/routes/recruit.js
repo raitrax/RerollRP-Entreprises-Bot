@@ -3,7 +3,7 @@ require('dotenv').config();
 const router = express.Router();
 
 router.post(`/`, async (req, res) => {
-	let discordId = req.body.id;
+	let discordId = req.body.discordId;
 	let guild, member, msgAnnonce;
 
 	if (!discordId) {
@@ -30,7 +30,6 @@ router.post(`/`, async (req, res) => {
 		return;
 	}
 
-	// faire l'appel de la liste de véhicules du joueur /game/vehicles/all/ + interaction.user.i
 	const headers = {
 		Authorization: `Bearer ${process.env.API_REROLL_TOKEN}`,
 	};
@@ -50,7 +49,7 @@ router.post(`/`, async (req, res) => {
 		msgAnnonce = `:new: Bienvenue : ${character.grade} **${character.CharacterName}**`;
 		const annonceChannel = await interaction.client.channels.cache.get(process.env.ANNONCE_CHANNEL_ID);
 		await annonceChannel.send({ content: msgAnnonce, ephemeral: false });
-		//add effectif implementation to the user by fetching the effectif list from the reroll database
+
 		res.status(200).json({ msg: 'User has been added to the job' });
 		console.log(`<${member.displayName}> - <${member.id}> has been added to the job ${jobName}`);
 		return;

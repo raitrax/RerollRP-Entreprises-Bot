@@ -3,8 +3,8 @@ require('dotenv').config();
 const router = express.Router();
 
 router.post(`/`, async (req, res) => {
-    let discordId = req.body.id;
-    let guild, member, msgAnnonce, grade;
+    let discordId = req.body.discordId;
+    let guild, member, msgAnnonce;
 
     if (!discordId) {
         res.status(400).json({ error: 'Missing parameter discordId' });
@@ -30,40 +30,37 @@ router.post(`/`, async (req, res) => {
         return;
     }
 
-    const memberRole = await checkMemberRoles(member.id, process.env.LISTE_GRADE_ID);
+    const memberRole = await checkMemberRoles(member, process.env.LISTE_GRADE_ID);
     if (memberRole) {
         console.log(`Member has role: ${memberRole.name}`);
     } else {
         console.log('Member does not have any of the specified roles');
+        res.status(500).json({ error: 'Error member does not have any of the specified roles', errMsg: err });
+        console.error(err);
+        return;
     }
-
-
 
     msgAnnonce = `:arrow_left: ${memberRole.name} **${member.displayName}** ne fait plus partie de l'effectif`;
     const annonceChannel = await interaction.client.channels.cache.get(process.env.ANNONCE_CHANNEL_ID);
     await annonceChannel.send({ content: msgAnnonce, ephemeral: false });
 
-
-    //add all permission to the user by fetching data from the reroll database
-
-    res.status(200).json({ msg: 'User has been fired from the job' });
+    res.status(200).json({ msg: `<${member.displayName} - ${member.id}> has been fired from the job` });
     console.log(`<${member.displayName} - ${member.id}> has been added to the job ${jobName}`);
     return;
 });
 
-async function checkMemberRoles(memberId, roleIDs) {
-    const member = await guild.members.fetch(memberId);
+async function checkMemberRoles(member, roleIDs) {
     const guildRoles = member.guild.roles.cache;
 
     const hasRole = guildRoles.some(role => roleIDs.includes(role.id));
     if (hasRole) {
         for (const role of member.roles.cache) {
             if (roleIDs.includes(role.id)) {
-                return role; // Return the role object or role.name
+                await member.roles.remove(role.id).then(console.log(`Retrait du rôle ${role.name} pour ${Member.nickname}`));
             }
         }
     }
-
+    await member.roles.add(process.env.VAC_ROLE_ID).then(console.log(`Ajout du rôle Vacances pour ${Member.nickname}`));
     return null; // Member doesn't have any of the specified roles
 }
 
