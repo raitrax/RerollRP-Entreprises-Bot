@@ -2,7 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const router = express.Router();
 
-router.post(`/`, async (req, res) => {
+router.post("/", async (req, res) => {
 	let discordId = req.body.discordId;
 	let guild, member, msgAnnonce;
 
@@ -58,8 +58,6 @@ router.post(`/`, async (req, res) => {
 		console.error(error);
 		return interaction.editReply({ content: 'Veuillez réessayer plus tard', ephemeral: true });
 	}
-
-
 });
 
 module.exports = router;
