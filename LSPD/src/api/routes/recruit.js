@@ -47,7 +47,7 @@ router.post("/", async (req, res) => {
 		}
 
 		msgAnnonce = `:new: Bienvenue : ${character.grade} **${character.CharacterName}**`;
-		const annonceChannel = await interaction.client.channels.cache.get(process.env.ANNONCE_CHANNEL_ID);
+		const annonceChannel = await req.app.myClient.channels.cache.get(process.env.ANNONCE_CHANNEL_ID);
 		await annonceChannel.send({ content: msgAnnonce, ephemeral: false });
 
 		res.status(200).json({ msg: 'User has been added to the job' });

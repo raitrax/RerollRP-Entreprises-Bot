@@ -9,20 +9,17 @@ module.exports = {
 		const addedRoles = oldMember.roles.cache.filter(role => !newMember.roles.cache.has(role.id));
 		if (addedRoles.size > 0) {
 			if (process.env.LISTE_GRADE.includes(addedRoles.map(r => r.name))) {
-				//console.log(`The roles ${addedRoles.map(r => r.name)} was choosen add`);
-				const effectifChannel = newMember.client.channels.cache.get(process.env.EFFECTIF_CHANNEL_ID);
+				//const effectifChannel = newMember.client.channels.cache.get(process.env.EFFECTIF_CHANNEL_ID);
 				//await effectifLspd(effectifChannel, newMember.client, process.env.LISTE_GRADE);
 			}
 			console.log(`The roles ${addedRoles.map(r => r.name)} were added from ${oldMember.displayName}.`);
-
 		}
 
 		// If the role(s) are present on the new member object but are not on the old one (i.e role(s) were added)
 		const removedRoles = newMember.roles.cache.filter(role => !oldMember.roles.cache.has(role.id));
 		if (removedRoles.size > 0) {
 			if (process.env.LISTE_GRADE.includes(removedRoles.map(r => r.name))) {
-				//console.log(`The roles ${removedRoles.map(r => r.name)} was choosen remove`);
-				const effectifChannel = oldMember.client.channels.cache.get(process.env.EFFECTIF_CHANNEL_ID);
+				//const effectifChannel = oldMember.client.channels.cache.get(process.env.EFFECTIF_CHANNEL_ID);
 				//await effectifLspd(effectifChannel, oldMember.client, process.env.LISTE_GRADE);
 			}
 			console.log(`The roles ${removedRoles.map(r => r.name)} were removed to ${newMember.displayName}.`);
@@ -54,10 +51,10 @@ module.exports = {
 			}
 			console.log(txtActivity);
 
-			const PDSChannel = currentMember.client.channels.cache.get(process.env.PDS_CHANNEL_ID);
+			//const PDSChannel = currentMember.client.channels.cache.get(process.env.PDS_CHANNEL_ID);
 			const guild = currentMember.client.guilds.cache.get(process.env.GUILD_ID); // puppets server id
 			await guild.members.fetch();
-			const usersWithRole = guild.roles.cache.get(process.env.SERVICE_ROLE_ID).members;
+			//const usersWithRole = guild.roles.cache.get(process.env.SERVICE_ROLE_ID).members;
 			//await listService(PDSChannel, usersWithRole);
 
 			currentMember.client.user.setActivity({ name: txtActivity, type: ActivityType.Custom });

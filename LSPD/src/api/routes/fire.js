@@ -7,8 +7,7 @@ const { Client, EmbedBuilder, GatewayIntentBits, Partials } = require('discord.j
 router.post(`/`, async (req, res) => {
     let discordId = req.body.discordId;
     let guild, member, msgAnnonce;
-    const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessageReactions], partials: [Partials.Channel] });
-    const annonceChannel = await client.channels.cache.get(process.env.PDS_CHANNEL_ID);
+    const annonceChannel = await req.app.myClient.channels.cache.get(process.env.PDS_CHANNEL_ID);
 
     if (!discordId) {
         res.status(400).json({ error: 'Missing parameter discordId' });
@@ -34,7 +33,6 @@ router.post(`/`, async (req, res) => {
         return;
     }
 
-
     member.roles.cache.forEach(role => {
         if (role.id != guild.roles.everyone.id) {
             member.roles.remove(role).then(console.log(`Retrait du rôle ${role.name} pour ${member.nickname}`));
@@ -48,7 +46,7 @@ router.post(`/`, async (req, res) => {
     await annonceChannel.send({ content: msgAnnonce, ephemeral: false });
 
     res.status(200).json({ msg: `<${member.displayName} - ${member.id}> has been fired from the job` });
-    console.log(`<${member.displayName} - ${member.id}> has been added to the job ${jobName}`);
+    console.log(`<${member.displayName} - ${member.id}> has been fired from the job`);
     return;
 });
 module.exports = router;
