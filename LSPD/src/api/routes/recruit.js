@@ -50,8 +50,8 @@ router.post("/", async (req, res) => {
 		const annonceChannel = await req.app.myClient.channels.cache.get(process.env.ANNONCE_CHANNEL_ID);
 		await annonceChannel.send({ content: msgAnnonce, ephemeral: false });
 
-		res.status(200).json({ msg: 'User has been added to the job' });
-		console.log(`<${member.displayName}> - <${member.id}> has been added to the job ${jobName}`);
+		res.status(200).json({ msg: `${member.displayName} has been added to the job` });
+		console.log(`<${member.displayName}> - <${member.id}> has been added to the job`);
 		return;
 	}
 	catch (error) {
