@@ -43,7 +43,6 @@ module.exports = {
         .setDescription(`Fin de service par ${nickName}:  **${member.nickname}**`)
 
       interaction.editReply({ embeds: [FdsEmbed], ephemeral: true });
-      return logchannel.send({ embeds: [FdsEmbed], ephemeral: false });
     }
     else {
       FdsEmbed = new EmbedBuilder()
