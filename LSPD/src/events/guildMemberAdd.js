@@ -4,7 +4,7 @@ require('dotenv').config();
 module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member) {
-    console.warn(`New Member Joined --- id: ${member.id}\n--- name: ${member.displayName}`);
+    console.info(`New Member Joined --- id: ${member.id}\n--- name: ${member.displayName}`);
     const headers = {
       Authorization: `Bearer ${process.env.API_REROLL_TOKEN}`,
     };
@@ -22,7 +22,7 @@ module.exports = {
       console.error(`recruit fetchData - Joueur <@${member.id}> non trouvé!`);
       return false;
     }
-
+    console.info(`id: ${member.id}\n--- name: ${member.displayName}\nJob: ${character.job.id}\nPrenom : ${character.charinfo.firstname}\nNom: ${character.charinfo.lastname}\n Number: ${character.charinfo.phone}`);
     if (character.job.id === 'lspd') {
       const channel = member.guild.channels.cache.find((channel) => channel.id === process.env.FORMATION_CHANNEL_ID);
       const thread = await channel.threads.create({
@@ -47,6 +47,9 @@ module.exports = {
       thread.send('```Formation Pit```');
       thread.send('```Simulation lincoln```');
       console.log(`Created thread: ${thread.name}`);
+    }
+    else {
+      console.info(`id: ${member.id}\n--- name: ${member.displayName} n'est pas au LSPD`);
     }
   },
 };
