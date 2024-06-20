@@ -46,10 +46,10 @@ const getServiceRequestEmbed = (channel) => {
 const getServiceRequestButtons = () => {
   return new ActionRowBuilder()
     .addComponents(
-      new ButtonBuilder()
-        .setCustomId('service')
-        .setLabel('Service')
-        .setStyle(ButtonStyle.Danger),
+      // new ButtonBuilder()
+      //   .setCustomId('service')
+      //   .setLabel('Service')
+      //   .setStyle(ButtonStyle.Danger),
       new ButtonBuilder()
         .setCustomId('lead')
         .setLabel('Lead')

@@ -21,7 +21,7 @@ module.exports = {
     let membre = interaction.guild.members.cache.get(member.user.id);
     let FdsEmbed;
     let MpEmbed;
-    if (membre.roles.cache.has(process.env.SERVICE_ROLE_ID)) {
+    if (membre.roles.cache.has(process.env.ASTREINTE_ROLE_ID)) {
 
       membre.roles.remove(process.env.ASTREINTE_ROLE_ID);
 
