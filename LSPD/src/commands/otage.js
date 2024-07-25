@@ -21,7 +21,7 @@ module.exports = {
       return await interaction.editReply({ content: `Accès rendu pour <@${member.id}>`, ephemeral: false });
     } else {
       await member.roles.cache.forEach(async (role) => {
-        if (role.id !== interaction.member.guild.roles.everyone.id) {
+        if (role.id !== interaction.member.guild.roles.everyone.id || role.id !== process.env.SERVICE_ROLE_ID) {
           if (!member.roles.cache.has(role.id)) {
             console.info(`${member.nickname} n'a pas le rôle ${role.name}`);
           } else {
