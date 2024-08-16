@@ -9,7 +9,7 @@ const {
 } = require("discord.js");
 require("dotenv").config();
 require("../scripts/deploy-commands");
-const functions = require("../functions");
+// const functions = require("../functions");
 
 const getServiceRequestEmbed = () => {
   return (
@@ -51,12 +51,12 @@ module.exports = {
       txtActivity = `0 personne(s) en service`;
     }
     client.user.setActivity({ name: txtActivity, type: ActivityType.Custom });
-    const usersWithRole = guild.roles.cache.get(
+    /* const usersWithRole = guild.roles.cache.get(
       process.env.SERVICE_ROLE_ID,
-    ).members;
+    ).members; */
 
     const channel = client.channels.cache.get(process.env.PDS_CHANNEL_ID);
-    await functions.listService(channel, usersWithRole);
+    // await functions.listService(channel, usersWithRole);
 
     await channel.send({
       embeds: [getServiceRequestEmbed(channel)],
