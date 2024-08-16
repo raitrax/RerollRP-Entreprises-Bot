@@ -1,32 +1,64 @@
-const cron = require('node-cron');
-const { ActivityType } = require('discord.js');
+const cron = require("node-cron");
+require("dotenv").config();
+const { Collection, ChannelType } = require("discord.js");
+
+const categoriesToMonitor = new Collection();
+categoriesToMonitor.set(process.env.ARCHIVE_CATEGORY, "Archive");
+categoriesToMonitor.set(
+  process.env.ARCHIVE_COLD_CATEGORY,
+  "Archive Cold Cases",
+);
+
+const deleteInactiveChannels = async (client) => {
+  const guilds = client.guilds.cache;
+
+  guilds.forEach(async (guild) => {
+    categoriesToMonitor.forEach(async (categoryName, categoryId) => {
+      const category = guild.channels.cache.get(categoryId);
+      if (!category) return; // La catégorie n'existe pas sur ce serveur
+
+      const channels = category.children.cache;
+      channels.forEach(async (channel) => {
+        if (channel.type === ChannelType.GuildText) {
+          const lastMessage = await channel.messages
+            .fetch({ limit: 1 })
+            .catch(console.error);
+          const lastMessageArray = lastMessage.map((member) => member);
+          if (lastMessageArray) {
+            if (
+              lastMessageArray[0] &&
+              lastMessageArray[0].createdTimestamp <
+                Date.now() - 30 * 24 * 60 * 60 * 1000
+            ) {
+              try {
+                await channel.delete();
+                console.log(
+                  `Channel ${channel.name} deleted in category ${categoryName}`,
+                );
+              } catch (error) {
+                console.error(
+                  `Could not delete channel ${channel.name} in category ${categoryName}: ${error}`,
+                );
+              }
+            }
+          }
+        }
+      });
+    });
+  });
+};
 
 module.exports = {
-	initCron(client) {
-		cron.schedule('* * * * *', async function () {
-			const openDate = new Date(2023, 11, 8, 20, 0, 0).getTime();
-			const now = new Date().getTime();
-
-			if (now > openDate) {
-				const response = await fetch('https://launcher.reroll-rp.fr/status/');
-				const infoPlayers = await response.json();
-				if (infoPlayers && typeof infoPlayers.nbPlayer !== 'undefined') {
-					//client.user.setActivity({ name: `${infoPlayers.nbPlayer}/${infoPlayers.nbPlayerMax}, ${infoPlayers.queue} sur la route`, type: ActivityType.Custom });
-				}
-				// client.user.setActivity({ name: 'C\'est ouvert! 👀', type: ActivityType.Custom });
-				return;
-			}
-
-			const interval = openDate - now;
-
-			const activity = 'Ouverture dans ' +
-				`${Math.floor(interval / 86400000)}J ` +
-				`${Math.floor((interval / 3600000) % 24)}H ` +
-				`${Math.floor((interval / 60000) % 60)}M`;
-
-			client.user.setActivity({ name: `${activity}`, type: ActivityType.Custom });
-		}, {
-			timezone: 'Europe/Paris',
-		});
-	},
+  initCron(client) {
+    cron.schedule(
+      "* * * * *",
+      async function () {
+        console.log("cron");
+        deleteInactiveChannels(client);
+      },
+      {
+        timezone: "Europe/Paris",
+      },
+    );
+  },
 };

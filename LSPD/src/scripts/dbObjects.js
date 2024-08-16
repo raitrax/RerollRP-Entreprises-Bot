@@ -1,17 +1,20 @@
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 
-require('dotenv').config();
+require("dotenv").config();
 
-const sequelize = new Sequelize('database', 'username', 'password', {
-  host: 'localhost',
-  dialect: 'sqlite',
+const sequelize = new Sequelize("database", "username", "password", {
+  host: "localhost",
+  dialect: "sqlite",
   logging: false,
   // SQLite only
-  storage: '../database.sqlite',
+  storage: "../database.sqlite",
 });
 
 // require all models
-const User_Roles = require('../models/user_roles.models')(sequelize, Sequelize.DataTypes);
+const User_Roles = require("../models/user_roles.models")(
+  sequelize,
+  Sequelize.DataTypes,
+);
 
 module.exports = {
   User_Roles,

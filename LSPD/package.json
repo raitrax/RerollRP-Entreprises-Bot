@@ -1,22 +1,33 @@
 {
   "name": "rerollbot",
   "version": "1.0.0",
-  "description": "Discord bot for Reroll project",
+  "description": "Discord bot jobs for Reroll project",
   "main": "index.js",
   "repository": "https://github.com/RerollRP/rerollbot",
   "author": "S0ngfu",
   "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
+  },
   "dependencies": {
     "cors": "^2.8.5",
-    "discord.js": "^14.13.0",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "mysql2": "^3.6.5",
-    "node-cron": "^3.0.2",
-    "sequelize": "^6.33.0",
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "globals": "^15.9.0",
+    "mysql2": "^3.10.0",
+    "node-cron": "^3.0.3",
+    "sequelize": "^6.37.3",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "eslint": "^8.51.0"
+    "@eslint/js": "^9.8.0",
+    "eslint": "^9.8.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "prettier": "^3.3.3"
   }
 }
