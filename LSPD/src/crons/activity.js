@@ -53,7 +53,6 @@ module.exports = {
     cron.schedule(
       "* * * * *",
       async function () {
-        console.log("cron");
         deleteInactiveChannels(client);
       },
       {

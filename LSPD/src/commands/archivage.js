@@ -13,6 +13,12 @@ module.exports = {
             .setName("channel")
             .setDescription(`Channel à assigner pour l'opération`)
             .setRequired(true),
+        )
+        .addBooleanOption((option) =>
+          option
+            .setName("interne")
+            .setDescription("Est-ce une affaire interne?")
+            .setRequired(false),
         ),
     )
     .addSubcommand((subcommand) =>
@@ -46,6 +52,7 @@ module.exports = {
       .deferReply({ ephemeral: true })
       .catch((e) => console.error(e));
     const Channel = interaction.options.getChannel("channel");
+    const Interne = interaction.options.getBoolean("interne");
     let idArchives;
     if (interaction.options.getSubcommand() === "normal") {
       idArchives = process.env.ARCHIVE_CATEGORY;
@@ -64,7 +71,11 @@ module.exports = {
           ephemeral: true,
         });
       // Déplacer le canal dans la nouvelle catégorie
-      await Channel.setParent(idArchives, { lockPermissions: false });
+      if (Interne) {
+        await Channel.setParent(idArchives, { lockPermissions: false });
+      } else {
+        await Channel.setParent(idArchives, { lockPermissions: true });
+      }
       await Channel.setPosition(0, { relative: false, parent: idArchives })
         .then(Channel.send({ content: "**Archivage**", ephemeral: false }))
         .catch(console.error);
