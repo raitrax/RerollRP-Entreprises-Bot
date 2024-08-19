@@ -28,7 +28,7 @@ const deleteInactiveChannels = async (client) => {
             if (
               lastMessageArray[0] &&
               lastMessageArray[0].createdTimestamp <
-              Date.now() - 30 * 24 * 60 * 60 * 1000
+                Date.now() - 30 * 24 * 60 * 60 * 1000
             ) {
               try {
                 await channel.delete();
