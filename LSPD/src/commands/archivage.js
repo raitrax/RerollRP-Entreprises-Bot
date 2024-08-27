@@ -3,7 +3,7 @@ const { SlashCommandBuilder, ChannelType } = require("discord.js");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("archivage")
-    .setDescription(`Archivage d'un channel. Limite : ltn+`)
+    .setDescription(`Archivage d'un channel.`)
     .addSubcommand((subcommand) =>
       subcommand
         .setName("normal")

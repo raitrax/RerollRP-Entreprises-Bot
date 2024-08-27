@@ -1,6 +1,5 @@
 const { Events, ActivityType } = require("discord.js");
 require("dotenv").config();
-// const functions = require("../functions");
 
 module.exports = {
   name: Events.GuildMemberUpdate,
