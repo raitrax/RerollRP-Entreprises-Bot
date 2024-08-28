@@ -18,7 +18,7 @@ const getServiceRequestEmbed = () => {
 				`Pour prendre la centrale - Appuyez sur 🟢\n Pour se mettre en astreinte - Appuyez sur ⚫`,
 			)
 			//.setDescription('Bon jeu!')
-			.setAuthor({ name: "Centrale LSPD" })
+			.setAuthor({ name: "Centrale LSCS" })
 			.setTimestamp(new Date())
 	);
 };
